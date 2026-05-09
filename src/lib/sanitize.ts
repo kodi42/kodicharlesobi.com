@@ -26,6 +26,7 @@ export function cleanDriveHtml(html: string): string {
       '*': [],
     },
     allowedSchemes: ['http', 'https', 'mailto'],
+    allowedSchemesByTag: { img: ['http', 'https', 'data'] },
     transformTags: {
       // Drive's anchor hrefs route through its redirector. Unwrap them.
       a: (tagName, attribs) => {
@@ -61,16 +62,30 @@ export function cleanDriveHtml(html: string): string {
   return cleaned.replace(/<span>([\s\S]*?)<\/span>/g, '$1');
 }
 
+const NAMED_ENTITIES: Record<string, string> = {
+  amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", nbsp: ' ',
+};
+
+function htmlToText(html: string): string {
+  return html
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&#(\d+);/g, (_, n) => String.fromCodePoint(Number(n)))
+    .replace(/&#x([0-9a-f]+);/gi, (_, h) => String.fromCodePoint(parseInt(h, 16)))
+    .replace(/&([a-z]+);/gi, (m, name) => NAMED_ENTITIES[name.toLowerCase()] ?? m)
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
 /** Very rough word-count for reading time, post-sanitize. */
 export function wordCount(html: string): number {
-  const text = html.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+  const text = htmlToText(html);
   if (!text) return 0;
   return text.split(' ').length;
 }
 
 /** Extract the first ~200 chars of body text for an excerpt. */
 export function extractExcerpt(html: string, max = 200): string {
-  const text = html.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+  const text = htmlToText(html);
   if (text.length <= max) return text;
   const trimmed = text.slice(0, max);
   const lastSpace = trimmed.lastIndexOf(' ');

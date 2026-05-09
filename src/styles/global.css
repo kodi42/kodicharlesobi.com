@@ -212,7 +212,7 @@ body { background: var(--paper); color: var(--fg-1); font-family: var(--font-san
 .art-body a:hover { color: var(--accent-hover); }
 .art-body ul, .art-body ol { padding-left: 24px; margin: 0 0 1.2em; }
 .art-body li { margin-bottom: 0.3em; }
-.art-body img { margin: 24px 0; border-radius: var(--r-2); }
+.art-body img { display: block; max-width: 100%; height: auto; margin: 24px auto; border-radius: var(--r-2); }
 .art-body code {
   font-family: var(--font-mono); font-size: 0.9em;
   background: var(--paper-2); padding: 0.12em 0.4em; border-radius: var(--r-2);
