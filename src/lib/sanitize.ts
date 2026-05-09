@@ -76,6 +76,37 @@ function htmlToText(html: string): string {
     .trim();
 }
 
+/**
+ * Parse a YAML-style frontmatter block from the top of a cleaned doc body.
+ * Format expected (each line is its own paragraph in the doc):
+ *   ---
+ *   key: value
+ *   key: value
+ *   ---
+ */
+const FM_FENCE = /<p>\s*(?:&nbsp;\s*)*-{3,}\s*(?:&nbsp;\s*)*<\/p>/;
+const FM_LEAD = new RegExp('^\\s*(?:<p>(?:\\s|&nbsp;)*<\\/p>\\s*)*' + FM_FENCE.source);
+
+export function parseFrontmatter(html: string): { meta: Record<string, string>; body: string } {
+  const open = html.match(FM_LEAD);
+  if (!open) return { meta: {}, body: html };
+  const after = html.slice(open[0].length);
+  const close = after.match(FM_FENCE);
+  if (!close || close.index === undefined) return { meta: {}, body: html };
+
+  const block = after.slice(0, close.index);
+  const body = after.slice(close.index + close[0].length).replace(/^\s*(?:<p>(?:\s|&nbsp;)*<\/p>\s*)*/, '');
+
+  const meta: Record<string, string> = {};
+  for (const para of block.split(/<\/p>\s*<p>/)) {
+    const line = htmlToText(para.replace(/^<p>|<\/p>$/g, ''));
+    if (!line) continue;
+    const kv = line.match(/^([a-z][a-z0-9_-]*)\s*:\s*(.+)$/i);
+    if (kv) meta[kv[1].toLowerCase()] = kv[2].trim();
+  }
+  return { meta, body };
+}
+
 /** Very rough word-count for reading time, post-sanitize. */
 export function wordCount(html: string): number {
   const text = htmlToText(html);

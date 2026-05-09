@@ -7,6 +7,7 @@ interface PostPreview {
   excerpt: string;
   date: string;
   readTime: number;
+  category: string;
 }
 interface Props {
   posts: PostPreview[];
@@ -14,14 +15,15 @@ interface Props {
 }
 const { posts, totalCount } = Astro.props;
 
-// Rotate tones + shapes + slight rotation to get the sticker feel
+// Rotate tones + shapes + slight rotation to get the sticker feel.
+// The category label comes from the post itself.
 const variants = [
-  { tone: 'orange',   tag: 'ESSAY',   tagBg: 'var(--sj-flame)',    shape: 'circle',   rot: -3 },
-  { tone: 'crimson',  tag: 'ESSAY',   tagBg: 'var(--sj-crimson)',  shape: 'blob',     rot: 2  },
-  { tone: 'burgundy', tag: 'ESSAY',   tagBg: 'var(--sj-burgundy)', shape: 'blob2',    rot: -2 },
-  { tone: 'amber',    tag: 'LETTER',  tagBg: 'var(--sj-ink)',      shape: 'squircle', rot: 3  },
-  { tone: 'flame',    tag: 'ESSAY',   tagBg: 'var(--sj-flame)',    shape: 'blob3',    rot: -1 },
-  { tone: 'orange',   tag: 'ESSAY',   tagBg: 'var(--sj-orange)',   shape: 'blob',     rot: -4 },
+  { tone: 'orange',   tagBg: 'var(--sj-flame)',    shape: 'circle',   rot: -3 },
+  { tone: 'crimson',  tagBg: 'var(--sj-crimson)',  shape: 'blob',     rot: 2  },
+  { tone: 'burgundy', tagBg: 'var(--sj-burgundy)', shape: 'blob2',    rot: -2 },
+  { tone: 'amber',    tagBg: 'var(--sj-ink)',      shape: 'squircle', rot: 3  },
+  { tone: 'flame',    tagBg: 'var(--sj-flame)',    shape: 'blob3',    rot: -1 },
+  { tone: 'orange',   tagBg: 'var(--sj-orange)',   shape: 'blob',     rot: -4 },
 ];
 
 const dateTag = (iso: string) =>
@@ -53,7 +55,7 @@ const dateTag = (iso: string) =>
             style={`--base-rot: ${v.rot}deg; transform: rotate(${v.rot}deg);`}
           >
             <div class="sj-card-top">
-              <span class="sj-tag" style={`background: ${v.tagBg}; color: var(--sj-cream);`}>• {v.tag}</span>
+              <span class="sj-tag" style={`background: ${v.tagBg}; color: var(--sj-cream);`}>• {post.category}</span>
               <span class="sj-card-date">{dateTag(post.date)}</span>
             </div>
             <div class={`sj-well sj-well--${v.shape} sj-well--${v.tone} sj-card-well`} aria-hidden="true"></div>

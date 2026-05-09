@@ -11,6 +11,7 @@ const posts = defineCollection({
     driveId: z.string(),
     readTime: z.number(),
     excerpt: z.string(),
+    category: z.string().default('ESSAY'),
     html: z.string(),
   }),
 });

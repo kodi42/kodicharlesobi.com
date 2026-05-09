@@ -21,7 +21,7 @@ const { post } = Astro.props;
     <a class="back-link" href="/">← Back to writing</a>
 
     <header class="art-header">
-      <p class="article-eyebrow">ESSAY · {formatDate(post.date).toUpperCase()}</p>
+      <p class="article-eyebrow">{post.category} · {formatDate(post.date).toUpperCase()}</p>
       <h1 class="art-title">{post.title}</h1>
       {post.excerpt && <p class="art-dek">{post.excerpt}</p>}
       <Byline date={post.date} readTime={post.readTime} />

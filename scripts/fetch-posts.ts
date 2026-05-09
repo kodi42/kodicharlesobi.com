@@ -12,7 +12,7 @@ import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { listFolderDocs, exportDocAsHtml } from '../src/lib/drive.js';
-import { cleanDriveHtml, extractExcerpt, wordCount } from '../src/lib/sanitize.js';
+import { cleanDriveHtml, extractExcerpt, wordCount, parseFrontmatter } from '../src/lib/sanitize.js';
 import { slugify, readingTime } from '../src/lib/posts.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -39,7 +39,8 @@ async function main() {
 
   for (const doc of docs) {
     const rawHtml = await exportDocAsHtml(doc.id);
-    const html = cleanDriveHtml(rawHtml);
+    const cleaned = cleanDriveHtml(rawHtml);
+    const { meta, body: html } = parseFrontmatter(cleaned);
     const words = wordCount(html);
 
     let slug = slugify(doc.name);
@@ -48,12 +49,13 @@ async function main() {
 
     const record = {
       slug,
-      title: doc.name,
+      title: meta.title ?? doc.name,
       date: doc.modifiedTime,
       created: doc.createdTime,
       driveId: doc.id,
       readTime: readingTime(words),
-      excerpt: extractExcerpt(html),
+      excerpt: meta.blurb ?? extractExcerpt(html),
+      category: (meta.category ?? 'ESSAY').toUpperCase(),
       html,
     };
 
