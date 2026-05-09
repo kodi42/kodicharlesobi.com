@@ -1,0 +1,79 @@
+---
+import { formatDate } from '@/lib/posts';
+
+interface PostPreview {
+  slug: string;
+  title: string;
+  excerpt: string;
+  date: string;
+  readTime: number;
+}
+interface Props {
+  posts: PostPreview[];
+  totalCount?: number;
+}
+const { posts, totalCount } = Astro.props;
+
+// Rotate tones + shapes + slight rotation to get the sticker feel
+const variants = [
+  { tone: 'orange',   tag: 'ESSAY',   tagBg: 'var(--sj-flame)',    shape: 'circle',   rot: -3 },
+  { tone: 'crimson',  tag: 'ESSAY',   tagBg: 'var(--sj-crimson)',  shape: 'blob',     rot: 2  },
+  { tone: 'burgundy', tag: 'ESSAY',   tagBg: 'var(--sj-burgundy)', shape: 'blob2',    rot: -2 },
+  { tone: 'amber',    tag: 'LETTER',  tagBg: 'var(--sj-ink)',      shape: 'squircle', rot: 3  },
+  { tone: 'flame',    tag: 'ESSAY',   tagBg: 'var(--sj-flame)',    shape: 'blob3',    rot: -1 },
+  { tone: 'orange',   tag: 'ESSAY',   tagBg: 'var(--sj-orange)',   shape: 'blob',     rot: -4 },
+];
+
+const dateTag = (iso: string) =>
+  new Date(iso).toLocaleDateString('en-US', { month: 'short', day: '2-digit' }).toUpperCase();
+---
+<section id="latest" class="sj-feed">
+  <div class="sj-feed-head">
+    <h2 class="sj-feed-title">Recently</h2>
+    <span class="sj-feed-title-script">on my mind</span>
+    <div class="sj-feed-rule" aria-hidden="true"></div>
+    <a class="sj-feed-count sj-link-wavy" href="#latest">
+      {totalCount ?? posts.length} letters → all
+    </a>
+  </div>
+
+  {posts.length === 0 ? (
+    <div class="sj-empty">
+      <div class="sj-empty-script">nothing yet,</div>
+      <p class="sj-empty-body">Drop a Google Doc into the posts folder — it will show up here.</p>
+    </div>
+  ) : (
+    <div class="sj-feed-grid">
+      {posts.map((post, i) => {
+        const v = variants[i % variants.length];
+        return (
+          <a
+            href={`/posts/${post.slug}`}
+            class="sj-card sj-hover-lift"
+            style={`--base-rot: ${v.rot}deg; transform: rotate(${v.rot}deg);`}
+          >
+            <div class="sj-card-top">
+              <span class="sj-tag" style={`background: ${v.tagBg}; color: var(--sj-cream);`}>• {v.tag}</span>
+              <span class="sj-card-date">{dateTag(post.date)}</span>
+            </div>
+            <div class={`sj-well sj-well--${v.shape} sj-well--${v.tone} sj-card-well`} aria-hidden="true"></div>
+            <h3 class="sj-card-title">{post.title}</h3>
+            {post.excerpt && <p class="sj-card-dek">{post.excerpt}</p>}
+            <div class="sj-card-foot">
+              <span class="sj-card-readtime">{post.readTime} min read</span>
+              <span class="sj-card-open">open →</span>
+            </div>
+          </a>
+        );
+      })}
+    </div>
+  )}
+
+  {posts.length > 0 && (
+    <div class="sj-feed-more">
+      <a href="#latest" class="sj-hover-lift">
+        Read every letter <span class="script-accent">(all {totalCount ?? posts.length})</span> →
+      </a>
+    </div>
+  )}
+</section>

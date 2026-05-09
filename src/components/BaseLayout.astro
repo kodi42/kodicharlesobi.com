@@ -1,0 +1,35 @@
+---
+import '@/styles/colors_and_type.css';
+import '@/styles/global.css';
+
+import TopNav from './TopNav.astro';
+import Footer from './Footer.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  current?: 'home' | 'post';
+}
+const {
+  title,
+  description = 'Writing by Kodi.',
+  current = 'home',
+} = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/assets/mark-dot.svg" />
+  </head>
+  <body class:list={[{ 'page-article': current === 'post' }]}>
+    <TopNav current={current} />
+    <main class="app">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

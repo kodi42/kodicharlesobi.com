@@ -1,0 +1,34 @@
+---
+// Ticker marquee. Placeholder content — user can edit.
+const items = [
+  { text: "Currently reading East of Eden", cls: 'sj-m-serif' },
+  { text: "Zone 2 for 45 min", cls: 'sj-m-grotesk' },
+  { text: "Huberman on morning sun", cls: 'sj-m-serif sj-m-serif--accent' },
+  { text: "Magnesium glycinate, 400mg", cls: 'sj-m-grotesk' },
+  { text: "Rewatching Chef's Table", cls: 'sj-m-serif' },
+  { text: "Cold plunge, day 24", cls: 'sj-m-grotesk' },
+  { text: "Tim Ferriss with Seth Godin", cls: 'sj-m-serif sj-m-serif--accent' },
+];
+---
+<div class="sj-ticker">
+  <div class="sj-marquee" aria-hidden="true">
+    <div class="sj-marquee-track">
+      <div class="sj-marquee-row">
+        {items.map((it) => (
+          <>
+            <span class={`sj-marquee-item ${it.cls}`}>{it.text}</span>
+            <span class="sj-marquee-sep">✦</span>
+          </>
+        ))}
+      </div>
+      <div class="sj-marquee-row">
+        {items.map((it) => (
+          <>
+            <span class={`sj-marquee-item ${it.cls}`}>{it.text}</span>
+            <span class="sj-marquee-sep">✦</span>
+          </>
+        ))}
+      </div>
+    </div>
+  </div>
+</div>

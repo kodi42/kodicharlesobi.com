@@ -1,0 +1,26 @@
+{
+  "name": "kodi-blog",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "fetch-posts": "tsx scripts/fetch-posts.ts",
+    "prebuild": "npm run fetch-posts",
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "register-watch": "tsx scripts/register-watch.ts"
+  },
+  "dependencies": {
+    "astro": "^4.16.0",
+    "googleapis": "^144.0.0",
+    "sanitize-html": "^2.13.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.0",
+    "@types/sanitize-html": "^2.13.0",
+    "dotenv": "^16.4.5",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0"
+  }
+}

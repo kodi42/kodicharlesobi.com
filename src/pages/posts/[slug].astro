@@ -1,0 +1,32 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/components/BaseLayout.astro';
+import Byline from '@/components/Byline.astro';
+import ReadingProgress from '@/components/ReadingProgress.astro';
+import { formatDate } from '@/lib/posts';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts');
+  return posts.map((entry) => ({
+    params: { slug: entry.data.slug },
+    props: { post: entry.data },
+  }));
+}
+
+const { post } = Astro.props;
+---
+<BaseLayout title={`${post.title} — Kodi`} description={post.excerpt} current="post">
+  <ReadingProgress />
+  <article class="article-page">
+    <a class="back-link" href="/">← Back to writing</a>
+
+    <header class="art-header">
+      <p class="article-eyebrow">ESSAY · {formatDate(post.date).toUpperCase()}</p>
+      <h1 class="art-title">{post.title}</h1>
+      {post.excerpt && <p class="art-dek">{post.excerpt}</p>}
+      <Byline date={post.date} readTime={post.readTime} />
+    </header>
+
+    <div class="art-body prose" set:html={post.html}></div>
+  </article>
+</BaseLayout>

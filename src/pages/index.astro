@@ -1,0 +1,30 @@
+---
+import { getCollection } from 'astro:content';
+import StickerLayout from '@/components/sticker/StickerLayout.astro';
+import TopStrip from '@/components/sticker/TopStrip.astro';
+import StickerNav from '@/components/sticker/StickerNav.astro';
+import Hero from '@/components/sticker/Hero.astro';
+import Ticker from '@/components/sticker/Ticker.astro';
+import About from '@/components/sticker/About.astro';
+import Feed from '@/components/sticker/Feed.astro';
+import StickerFooter from '@/components/sticker/StickerFooter.astro';
+
+const all = await getCollection('posts');
+const sorted = all
+  .map((entry) => entry.data)
+  .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+const recent = sorted.slice(0, 3);
+const totalCount = sorted.length;
+---
+<StickerLayout
+  title="kodi — a little notebook"
+  description="Writing by Kodi, published straight from a Google Drive folder."
+>
+  <TopStrip />
+  <StickerNav />
+  <Hero latestNumber={totalCount} />
+  <Ticker />
+  <About />
+  <Feed posts={recent} totalCount={totalCount} />
+  <StickerFooter />
+</StickerLayout>

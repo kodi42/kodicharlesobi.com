@@ -1,0 +1,13 @@
+---
+// Narrow ink bar at the very top. VT323 mono, volume/issue counter style.
+const now = new Date();
+const day = now.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' }).toUpperCase();
+---
+<div class="sj-topstrip">
+  <span>VOL. 01 · {day}</span>
+  <span class="live">
+    <span class="live-dot" aria-hidden="true"></span>
+    LIVE · WRITING NOW
+  </span>
+  <span class="filed">FILED UNDER: NOTES TO SELF</span>
+</div>

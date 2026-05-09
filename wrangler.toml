@@ -1,0 +1,16 @@
+# Cloudflare Pages config.
+# Secrets (GOOGLE_SERVICE_ACCOUNT_JSON, DRIVE_FOLDER_ID, DEPLOY_HOOK_URL,
+# WEBHOOK_TOKEN) are set in the Pages dashboard, not here.
+
+name = "kodi-blog"
+compatibility_date = "2026-04-21"
+pages_build_output_dir = "dist"
+
+# Optional safety net: trigger a rebuild every 6 hours even if the Drive
+# webhook misses a change. Cloudflare free tier allows cron triggers.
+# To enable, set up a companion Worker that calls /api/rebuild?key=...
+# (Pages Functions don't support cron directly; use a Worker that hits the
+# rebuild endpoint on a schedule.)
+#
+# [triggers]
+# crons = ["0 */6 * * *"]

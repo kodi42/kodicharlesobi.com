@@ -1,0 +1,29 @@
+---
+import '@/styles/colors_and_type.css';
+import '@/styles/global.css';
+import '@/styles/sticker-journal.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+const {
+  title,
+  description = 'Writing by Kodi. Dropped into a folder.',
+} = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/assets/mark-dot.svg" />
+  </head>
+  <body class="sj-page">
+    <div class="sj">
+      <slot />
+    </div>
+  </body>
+</html>

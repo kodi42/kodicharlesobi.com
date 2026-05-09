@@ -1,0 +1,28 @@
+---
+// Sticky pill nav with brand mark that drifts.
+const links = [
+  { label: 'Latest', href: '#latest' },
+  { label: 'Writing', href: '#latest' },
+  { label: 'About', href: '#about' },
+];
+---
+<nav class="sj-nav" aria-label="Primary">
+  <a class="sj-brand" href="#top">
+    <span class="sj-brand-mark" aria-hidden="true">
+      <span class="sj-brand-mark-inner"></span>
+    </span>
+    <span>
+      <span class="sj-brand-name">kodi</span>
+      <span class="sj-brand-tag">a little notebook</span>
+    </span>
+  </a>
+  <div class="sj-nav-links">
+    {links.map((l, i) => (
+      <a href={l.href} class:list={[{ active: i === 0 }, 'sj-hover-wiggle']}>{l.label}</a>
+    ))}
+    <a class="sj-nav-cta sj-hover-lift" href="#subscribe">
+      <span class="dot" aria-hidden="true"></span>
+      Subscribe
+    </a>
+  </div>
+</nav>

@@ -1,0 +1,111 @@
+---
+// Hero: big DM Serif headline with Pinyon Script 'on', underline swoosh, sticker collage.
+interface Props {
+  latestNumber?: number;
+}
+const { latestNumber = 1 } = Astro.props;
+---
+<section id="top" class="sj-hero">
+  <div class="sj-hero-spotlight" id="sj-spotlight" aria-hidden="true"></div>
+  <span class="sj-floating-dot d1" aria-hidden="true"></span>
+  <span class="sj-floating-dot d2" aria-hidden="true"></span>
+  <span class="sj-floating-dot d3" aria-hidden="true"></span>
+
+  <div class="sj-hero-grid">
+    <div>
+      <div class="sj-hero-eyebrow">
+        <span class="dot" aria-hidden="true"></span>
+        Letter {String(latestNumber).padStart(3, '0')}, out this morning
+      </div>
+
+      <h1 class="sj-hero-title">
+        Hi. I keep<br/>
+        <span class="underlined">
+          notes
+          <svg width="300" height="22" viewBox="0 0 300 22" aria-hidden="true">
+            <path d="M5 14 Q 75 2, 150 12 T 295 8" stroke="#E85D04" stroke-width="5" fill="none" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <span class="script">on</span><br/>
+        what I'm<br/>
+        learning.
+      </h1>
+
+      <p class="sj-hero-dek">
+        Books and podcasts. Body experiments. Half baked thoughts I polish out loud. Pull up a chair.
+      </p>
+
+      <div class="sj-hero-ctas">
+        <a class="sj-cta-primary sj-hover-lift" href="#latest">
+          <span class="dot" aria-hidden="true"></span>
+          Read the latest
+        </a>
+        <a class="sj-cta-soft sj-link-wavy" href="#about">or meet me briefly →</a>
+      </div>
+
+      <div class="sj-hero-stats">
+        <div>
+          <div class="sj-stat-n">{latestNumber}</div>
+          <div class="sj-stat-l">· letters so far</div>
+        </div>
+        <div>
+          <div class="sj-stat-n">2026</div>
+          <div class="sj-stat-l">· writing slowly</div>
+        </div>
+        <div>
+          <div class="sj-stat-n">1</div>
+          <div class="sj-stat-l">· folder, no cms</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sj-collage" aria-hidden="true">
+      <div class="sj-well sj-well--blob sj-well--orange well-abs well-1">
+        <span class="sj-well-hint">This week</span>
+        <span class="sj-well-label">Book I'm in</span>
+      </div>
+      <div class="sj-well sj-well--circle sj-well--crimson well-abs well-2">
+        <span></span>
+        <span class="sj-well-label">Trail at 6am</span>
+      </div>
+      <div class="sj-well sj-well--blob2 sj-well--burgundy well-abs well-3">
+        <span></span>
+        <span class="sj-well-label">Coffee</span>
+      </div>
+      <div class="sj-well sj-well--squircle sj-well--apricot well-abs well-4">
+        <span></span>
+        <span class="sj-well-label">Today's light</span>
+      </div>
+
+      <div class="sj-note note-hero">real, slow, human.</div>
+
+      <div class="readers-pill">✿ one folder · one doc · live ✿</div>
+
+      <div class="stamp">FREE<br/>NEVER<br/>SPAM</div>
+    </div>
+  </div>
+
+  <svg class="sj-wave" height="36" viewBox="0 0 1400 36" preserveAspectRatio="none" aria-hidden="true" style="margin-top:60px">
+    <path
+      d="M0 18 Q 112 4 224 18 T 448 18 T 672 18 T 896 18 T 1120 18 T 1344 18 T 1400 18"
+      stroke="#D00000" stroke-width="3" fill="none" stroke-linecap="round"
+    />
+  </svg>
+</section>
+
+<script>
+  const section = document.querySelector<HTMLElement>('.sj-hero');
+  const spotlight = document.getElementById('sj-spotlight');
+  if (section && spotlight) {
+    const onMove = (e: MouseEvent) => {
+      const r = section.getBoundingClientRect();
+      const x = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width));
+      const y = Math.max(0, Math.min(1, (e.clientY - r.top) / r.height));
+      spotlight.style.background = `radial-gradient(600px circle at ${x * 100}% ${y * 100}%, rgba(244,140,6,.18), transparent 55%)`;
+      spotlight.classList.add('active');
+    };
+    const onLeave = () => spotlight.classList.remove('active');
+    section.addEventListener('mousemove', onMove);
+    section.addEventListener('mouseleave', onLeave);
+  }
+</script>

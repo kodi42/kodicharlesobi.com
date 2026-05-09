@@ -1,0 +1,300 @@
+/* ==========================================================================
+   cccMedias — colors & type
+   Foundational CSS variables. Import before any component styles.
+   ========================================================================== */
+
+/* ---- FONTS ---------------------------------------------------------------
+   Based on user's headline preferences (IMG_0763.PNG):
+     Helvetica · Flamboyan · Grotesk · Made Sunflower · Times New Roman · VCR OSD MONO
+
+   Mapping:
+     • Helvetica        → system Helvetica Neue stack (UI body)
+     • Grotesk          → Space Grotesk (Google) — subheads + UI
+     • Made Sunflower   → DM Serif Display (Google, closest free didone)
+                          [FLAGGED: Made Sunflower is paid. Upload .otf to /fonts
+                           and this will swap in automatically.]
+     • Flamboyan        → Pinyon Script (Google, closest free ornate script)
+                          [FLAGGED: Flamboyan is paid. Upload .otf if licensed.]
+     • Times New Roman  → system serif stack
+     • VCR OSD MONO     → VT323 (Google, closest free CRT/pixel mono)
+                          [FLAGGED: VCR OSD MONO itself is free but not on Google.
+                           Upload fonts/VCR_OSD_MONO.ttf to swap automatically.]
+-------------------------------------------------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Pinyon+Script&family=Space+Grotesk:wght@400;500;600;700&family=VT323&display=swap');
+
+/* Local font overrides — activate when user uploads the real files */
+@font-face {
+  font-family: 'VCR OSD Mono';
+  src: local('VCR OSD Mono'), url('fonts/VCR_OSD_MONO.ttf') format('truetype');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Made Sunflower';
+  src: local('Made Sunflower'), url('fonts/MADE-Sunflower.otf') format('opentype');
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Flamboyan';
+  src: local('Flamboyan'), url('fonts/Flamboyan.otf') format('opentype');
+  font-display: swap;
+}
+
+:root {
+  /* ---- BRAND PALETTE (from provided swatch) ---------------------------- */
+  --ink-900:   #03071E; /* Night ink — primary text on light, base on dark */
+  --ink-800:   #370617; /* Oxblood — deep accents, dark surfaces */
+  --ember-900: #6A040F; /* Burgundy — secondary brand */
+  --ember-800: #9D0208; /* Crimson — hover on red, serious alerts */
+  --ember-700: #D00000; /* Signal red — PRIMARY brand color, CTAs */
+  --ember-600: #DC2F02; /* Flame — secondary CTA, link hover */
+  --ember-500: #E85D04; /* Orange — accent, tags */
+  --ember-400: #F48C06; /* Warm orange — highlights */
+  --ember-300: #FAA307; /* Amber — subtle emphasis */
+  --ember-200: #FFBA08; /* Gold — brightest, used sparingly */
+
+  /* ---- NEUTRALS (derived, not in source — warm-tinted grays) ---------- */
+  --paper:      #FDFBF6; /* Off-white page — warm, never cold */
+  --paper-2:    #F5F0E6; /* Card / subtle surface */
+  --paper-3:    #E9E0CE; /* Divider / rule / muted chip */
+  --stone-400:  #A79A82; /* Secondary text on light */
+  --stone-600:  #6B6252; /* Tertiary text */
+  --stone-800:  #2B2721; /* Near-black warm text */
+
+  /* ---- SEMANTIC FG / BG ----------------------------------------------- */
+  --bg:         var(--paper);
+  --bg-subtle:  var(--paper-2);
+  --bg-inverse: var(--ink-900);
+
+  --fg-1:       var(--ink-900);   /* primary text */
+  --fg-2:       var(--stone-800); /* body */
+  --fg-3:       var(--stone-600); /* secondary */
+  --fg-4:       var(--stone-400); /* tertiary / captions */
+  --fg-on-dark: var(--paper);
+  --fg-on-accent: var(--paper);
+
+  --accent:        var(--ember-700);  /* primary action */
+  --accent-hover:  var(--ember-800);
+  --accent-press:  var(--ember-900);
+  --accent-soft:   #FCE4D6;           /* tinted wash derived from ember */
+  --accent-ring:   color-mix(in oklab, var(--ember-700) 40%, transparent);
+
+  --warn:    var(--ember-300);
+  --danger:  var(--ember-800);
+  --success: #2D6A4F; /* outside palette — minimal use */
+
+  --rule:      color-mix(in oklab, var(--ink-900) 12%, transparent);
+  --rule-soft: color-mix(in oklab, var(--ink-900) 6%,  transparent);
+
+  /* ---- TYPE ----------------------------------------------------------- */
+  /* Display — the heavy didone for cover headlines, feature titles. */
+  --font-display: 'Made Sunflower', 'DM Serif Display', 'Times New Roman', Georgia, serif;
+  /* Serif — body serif for editorial prose. */
+  --font-serif:   'Times New Roman', 'Times', Georgia, serif;
+  /* Script — flourish, rare, used for editorial signatures & covers. */
+  --font-script:  'Flamboyan', 'Pinyon Script', 'Brush Script MT', cursive;
+  /* Grotesk — subheads, eyebrows, bold UI chrome. */
+  --font-grotesk: 'Space Grotesk', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  /* Sans — Helvetica for body UI, per user preference. */
+  --font-sans:    'Helvetica Neue', Helvetica, Arial, 'Liberation Sans', sans-serif;
+  /* Mono — CRT/VCR for timestamps, metadata, counters. */
+  --font-mono:    'VCR OSD Mono', 'VT323', ui-monospace, 'Courier New', monospace;
+
+  /* scale — modular, editorial. 1rem = 16px */
+  --fs-xs:   12px;
+  --fs-sm:   13px;
+  --fs-base: 16px;
+  --fs-md:   18px;
+  --fs-lg:   22px;
+  --fs-xl:   28px;
+  --fs-2xl:  38px;
+  --fs-3xl:  52px;
+  --fs-4xl:  72px;
+  --fs-5xl:  104px;
+
+  --lh-tight:  1.05;
+  --lh-snug:   1.2;
+  --lh-normal: 1.5;
+  --lh-loose:  1.7;
+
+  --tracking-tight:  -0.02em;
+  --tracking-normal: 0;
+  --tracking-wide:   0.02em;
+  --tracking-caps:   0.14em; /* eyebrows / labels in uppercase */
+
+  /* ---- SPACING (4px base) -------------------------------------------- */
+  --s-0: 0;
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 24px;
+  --s-6: 32px;
+  --s-7: 48px;
+  --s-8: 64px;
+  --s-9: 96px;
+  --s-10: 128px;
+
+  /* ---- RADII ---------------------------------------------------------- */
+  --r-0:  0;      /* default — editorial, square */
+  --r-1:  2px;
+  --r-2:  4px;
+  --r-3:  8px;
+  --r-4:  12px;
+  --r-pill: 999px;
+
+  /* ---- SHADOWS (warm-toned, not neutral) ----------------------------- */
+  --shadow-1: 0 1px 2px rgba(3,7,30,0.06), 0 1px 1px rgba(3,7,30,0.04);
+  --shadow-2: 0 6px 16px -6px rgba(55,6,23,0.18), 0 2px 4px rgba(3,7,30,0.06);
+  --shadow-3: 0 18px 40px -20px rgba(106,4,15,0.35), 0 6px 12px -6px rgba(3,7,30,0.12);
+  --shadow-inset: inset 0 0 0 1px rgba(3,7,30,0.08);
+  --shadow-glow:  0 0 0 6px color-mix(in oklab, var(--ember-700) 18%, transparent);
+
+  /* ---- MOTION --------------------------------------------------------- */
+  --ease-out:  cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in:   cubic-bezier(0.55, 0, 0.68, 0.12);
+  --ease-std:  cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-1: 120ms;
+  --dur-2: 200ms;
+  --dur-3: 320ms;
+  --dur-4: 520ms;
+}
+
+/* ==========================================================================
+   SEMANTIC TYPOGRAPHY
+   Apply these classes directly, or @extend the rules in component CSS.
+   ========================================================================== */
+
+html, body {
+  background: var(--bg);
+  color: var(--fg-1);
+  font-family: var(--font-sans);
+  font-size: var(--fs-base);
+  line-height: var(--lh-normal);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.h-display {
+  font-family: var(--font-display);
+  font-size: var(--fs-5xl);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+  color: var(--fg-1);
+  font-weight: 400;
+}
+
+.h1 {
+  font-family: var(--font-display);
+  font-size: var(--fs-4xl);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+  font-weight: 400;
+}
+
+.h2 {
+  font-family: var(--font-display);
+  font-size: var(--fs-3xl);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tracking-tight);
+  font-weight: 400;
+}
+
+.h3 {
+  font-family: var(--font-grotesk);
+  font-size: var(--fs-2xl);
+  line-height: var(--lh-snug);
+  font-weight: 700;
+  letter-spacing: var(--tracking-tight);
+}
+
+.h4 {
+  font-family: var(--font-sans);
+  font-size: var(--fs-xl);
+  line-height: var(--lh-snug);
+  font-weight: 700;
+  letter-spacing: var(--tracking-tight);
+}
+
+.h5 {
+  font-family: var(--font-grotesk);
+  font-size: var(--fs-lg);
+  line-height: var(--lh-snug);
+  font-weight: 600;
+}
+
+.script {
+  font-family: var(--font-script);
+  font-weight: 400;
+  font-size: var(--fs-3xl);
+  line-height: 1.1;
+  color: var(--accent);
+}
+
+.lede {
+  font-family: var(--font-serif);
+  font-size: var(--fs-lg);
+  line-height: var(--lh-normal);
+  color: var(--fg-2);
+  font-style: italic;
+}
+
+.body {
+  font-family: var(--font-sans);
+  font-size: var(--fs-base);
+  line-height: var(--lh-normal);
+  color: var(--fg-2);
+}
+
+.body-sm {
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-normal);
+  color: var(--fg-3);
+}
+
+.caption {
+  font-family: var(--font-sans);
+  font-size: var(--fs-xs);
+  line-height: var(--lh-normal);
+  color: var(--fg-4);
+}
+
+.meta {
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  letter-spacing: var(--tracking-wide);
+  color: var(--fg-3);
+  text-transform: uppercase;
+}
+
+.eyebrow {
+  font-family: var(--font-grotesk);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+code, .code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background: var(--paper-2);
+  padding: 0.12em 0.4em;
+  border-radius: var(--r-2);
+  color: var(--ember-900);
+}
+
+/* Prose block — article-body defaults */
+.prose p           { margin: 0 0 1em; max-width: 68ch; }
+.prose p + p       { margin-top: 1em; }
+.prose blockquote  {
+  border-left: 3px solid var(--accent);
+  padding-left: var(--s-5);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--fs-lg);
+  color: var(--fg-1);
+}
+.prose a           { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1.5px; }
+.prose a:hover     { color: var(--accent-hover); }

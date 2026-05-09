@@ -1,0 +1,50 @@
+---
+// About strip: photo well + copy. Placeholder copy — user can swap.
+const chips = [
+  '• Books I underline',
+  '• Podcasts I rewind',
+  '• Body stuff',
+  '• Letters to myself',
+  '• Walking thoughts',
+];
+---
+<section id="about" class="sj-about">
+  <div class="sj-about-bg-1" aria-hidden="true"></div>
+  <div class="sj-about-bg-2" aria-hidden="true"></div>
+
+  <div class="sj-about-grid">
+    <div class="sj-about-photo">
+      <div class="sj-well sj-well--blob3 sj-well--flame photo-well">
+        <span class="sj-well-hint">A photo of something I love</span>
+        <span class="sj-well-label">Hi, hello</span>
+      </div>
+      <div class="sj-note note">that's me ↘</div>
+      <div class="est">· EST. 2026 ·</div>
+    </div>
+
+    <div>
+      <span class="sj-tag" style="background: rgba(244,140,6,.13); color: var(--sj-burgundy);">• About me, briefly</span>
+      <h2 class="sj-about-title">
+        I read, I walk, I think<br/>
+        <span class="script">out loud</span>.
+      </h2>
+      <p class="sj-about-body">
+        I spend my mornings reading, my afternoons testing whatever protocol caught my eye, and my Sundays writing it all down. This site is the folder I drop those drafts into.
+      </p>
+      <p class="sj-about-body italic">
+        The goal here is to think slowly in a world that doesn't.
+      </p>
+
+      <div class="sj-topic-chips">
+        {chips.map((c) => <span class="sj-topic-chip">{c}</span>)}
+      </div>
+
+      <div style="display:flex; align-items:center; gap:14px; margin-top:36px;">
+        <a class="sj-hover-lift sj-cta-primary" href="#latest" style="background: var(--sj-crimson); color: var(--sj-cream);">
+          Start with my favorites →
+        </a>
+        <span style="font-family:'Pinyon Script', cursive; font-size:28px; color: var(--sj-flame);">or keep scrolling,</span>
+      </div>
+    </div>
+  </div>
+</section>

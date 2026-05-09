@@ -1,0 +1,32 @@
+---
+// Sticky masthead with brand + dot.
+interface Props {
+  current?: 'home' | 'post';
+}
+const { current = 'home' } = Astro.props;
+---
+<header class="topnav" data-current={current}>
+  <div class="topnav-inner">
+    <a class="brand" href="/" aria-label="Kodi — home">
+      Kodi<span class="brand-dot" aria-hidden="true"></span>
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="/" class:list={[{ active: current === 'home' }]}>Writing</a>
+      <a href="/#about">About</a>
+    </nav>
+    <div class="nav-right">
+      <span class="issue-meta">LIVE</span>
+    </div>
+  </div>
+</header>
+
+<script>
+  const nav = document.querySelector('.topnav');
+  const onScroll = () => {
+    if (!nav) return;
+    if (window.scrollY > 8) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+</script>
